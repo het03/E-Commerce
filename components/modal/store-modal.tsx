@@ -69,3 +69,5 @@ export const StoreModal = () => {
     </Modal>
   );
 };
+
+//Zod validation form
