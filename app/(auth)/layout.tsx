@@ -3,12 +3,9 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const centeringStyles = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100vh", // This centers vertically as well
-  };
-
-  return <div style={centeringStyles}>{children}</div>;
+  return (  
+    <div className="flex items-center justify-center h-full">
+      {children}
+    </div>
+    )
 }

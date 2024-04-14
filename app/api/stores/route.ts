@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs";
+
 import primsadb from "@/lib/prismadb";
 
 export async function POST(req: Request) {
