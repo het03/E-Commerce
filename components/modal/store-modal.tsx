@@ -1,4 +1,5 @@
 "use client";
+
 import * as z from "zod";
 import { Modal } from "@/components/ui/modal";
 import { useStoreModal } from "@/hooks/use-store-modal";
@@ -23,22 +24,24 @@ const formSchema = z.object({
 });
 
 export const StoreModal = () => {
-  const StoreModal = useStoreModal();
+  const storeModal = useStoreModal();
 
   const [loading, setLoading] = useState(false);
 
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { name: "" },
   });
+
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setLoading(true);
 
       const response = await axios.post("/api/stores", values);
-
-      toast.success("Store created.");
+      
+      window.location.assign(`/${response.data.id}`);
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {
@@ -49,9 +52,9 @@ export const StoreModal = () => {
   return (
     <Modal
       title="Create Store"
-      description="Create a new store"
-      isOpen={StoreModal.isOpen}
-      onClose={StoreModal.onClose}
+      description="Add a new store to manage products and categories"
+      isOpen={storeModal.isOpen}
+      onClose={storeModal.onClose}
     >
       <div>
         <div className="space-y-4 py-2 pb-4">
@@ -78,7 +81,7 @@ export const StoreModal = () => {
                 <Button
                   disabled={loading}
                   variant="outline"
-                  onClick={StoreModal.onClose}
+                  onClick={storeModal.onClose}
                 >
                   Cancel
                 </Button>
@@ -93,5 +96,3 @@ export const StoreModal = () => {
     </Modal>
   );
 };
-
-//Zod validation form
