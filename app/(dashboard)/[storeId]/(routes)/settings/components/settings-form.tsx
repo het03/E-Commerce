@@ -111,7 +111,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
                     render={({field}) => (
                         <FormItem>
                             <FormLabel>
-                                name
+                                Name
                             </FormLabel>
                             <FormControl>
                                 <Input disabled={loading} placeholder="Store name" {...field}/>
