@@ -22,8 +22,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { AlertModal } from "@/components/modal/alert-modal";
-import { ApiAlert } from "@/components/ui/api-alert";
-import { useOrigin } from "@/hooks/use-origin";
+import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
     label: z.string().min(1),
@@ -39,7 +38,6 @@ interface BillboardFormProps{
 export const BillboardForm: React.FC<BillboardFormProps> = ({
     initialData
 }) => {
-    const origin = useOrigin();
     const params = useParams();
     const router = useRouter();
 
@@ -62,9 +60,14 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     const onSubmit = async (data: BillboardFormValue) => {
         try{
             setLoading(true);
-            await axios.patch(`/api/stores/${params.storeId}`, data);
+            if(initialData){
+                await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data);
+            } else{
+                await axios.post(`/api/${params.storeId}/billboards`, data);
+            }
             router.refresh();
-            toast.success("Store updated");
+            router.push(`/${params.storeId}/billboards`);
+            toast.success(toastMessage);
         }
         catch (error){
             toast.error("An error occurred");
@@ -76,13 +79,13 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     const onDelete = async () => {
         try{
             setLoading(true);
-            await axios.delete(`/api/stores/${params.storeId}`);
+            await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
             router.refresh();
-            router.push("/");
-            toast.success("Store deleted");
+            router.push(`/${params.storeId}/billboards`);
+            toast.success("Billboard deleted");
         }
         catch (error){
-            toast.error("Make Sure you removed all the products and categories before deleting the store.");
+            toast.error("Make Sure you removed all categories using this billboard first.");
         }finally{
             setLoading(false);
             setOpen(false);
@@ -116,6 +119,26 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
         <Separator />
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
+                <FormField 
+                    control={form.control}
+                    name="imageUrl"
+                    render={({field}) => (
+                        <FormItem>
+                            <FormLabel>
+                                Background image
+                            </FormLabel>
+                            <FormControl>
+                                <ImageUpload 
+                                value={field.value ? [field.value] : []}
+                                disabled={loading}
+                                onChange={(url) => field.onChange(url)}
+                                onRemove={() => field.onChange("")}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                        )}
+                        />
                 <div className="grid grid-cols-3 gap-8">
                     <FormField 
                     control={form.control}
@@ -138,12 +161,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                 </Button>
             </form>
         </Form>
-        <Separator />
-        <ApiAlert 
-        title="NEXT_PUBLIC_API_URL" 
-        description={`${origin}/api/${params.storeId}`} 
-        variant="public"
-        />
     </>
     )
 }
