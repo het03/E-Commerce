@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { CategoryColumn } from "./columns";
+import { ProductColumn } from "./columns";
 import { Button } from "@/components/ui/button";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import toast from "react-hot-toast";
@@ -11,7 +11,7 @@ import { useState } from "react";
 import { AlertModal } from "@/components/modal/alert-modal";
 
 interface CellActionProps{
-    data: CategoryColumn
+    data: ProductColumn
 }
 
 export const CellAction: React.FC<CellActionProps> = ({
@@ -26,18 +26,18 @@ export const CellAction: React.FC<CellActionProps> = ({
 
     const onCopy = (id: string) => {
         navigator.clipboard.writeText(id);
-        toast.success("Category ID copied to clipboard");
+        toast.success("Billboard ID copied to clipboard");
     }
 
     const onDelete = async () => {
         try{
             setLoading(true);
-            await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
+            await axios.delete(`/api/${params.storeId}/billboards/${data.id}`);
             router.refresh();
-            toast.success("Category deleted");
+            toast.success("Billboard deleted");
         }
         catch (error){
-            toast.error("Make Sure you removed all products using this categories first.");
+            toast.error("Make Sure you removed all categories using this billboard first.");
         }finally{
             setLoading(false);
             setOpen(false);
@@ -70,7 +70,7 @@ export const CellAction: React.FC<CellActionProps> = ({
                         <Copy className="mr-2 h-4 w-4"/>
                         Copy ID
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/categories/${data.id}`)}>
+                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/billboards/${data.id}`)}>
                         <Edit className="mr-2 h-4 w-4"/>
                         Update
                     </DropdownMenuItem>
