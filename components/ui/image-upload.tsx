@@ -47,14 +47,19 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                         <Image 
                             fill
                             className="object-cover"
-                            alt="Imge"
+                            alt="Image"
                             src={url}
                         />
                     </div>
                 ))}
             </div>
+            
             {/*onUpload id depricated, instead use onSuccess which works*/}
-            <CldUploadWidget onSuccess={onUpload} uploadPreset="szkfnvvh"> 
+
+            {/*Update when you are in product page where you have to upload multiple files,
+            onSuccess reloads everytime whenever multiple images are uploaded,
+            so it only reders the latest one which was uploaded. */}
+            <CldUploadWidget onUpload={onUpload} uploadPreset="szkfnvvh"> 
                 {({ open }) => {
                     const onClick = () => {
                         open();
