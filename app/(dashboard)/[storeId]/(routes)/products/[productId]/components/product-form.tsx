@@ -70,7 +70,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         resolver: zodResolver(formSchema),
         defaultValues: initialData ? {
             ...initialData,
-            price: parseFloat(String(initialData?.price))
+            price: parseFloat(initialData.price.toString()), 
         } : {
             name: '',
             images: [],
@@ -84,23 +84,22 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     });
 
     const onSubmit = async (data: ProductFormValue) => {
-        try{
-            setLoading(true);
-            if(initialData){
-                await axios.patch(`/api/${params.storeId}/products/${params.productId}`, data);
-            } else{
-                await axios.post(`/api/${params.storeId}/products`, data);
-            }
-            router.refresh();
-            router.push(`/${params.storeId}/products`);
-            toast.success(toastMessage);
+        try {
+          setLoading(true);
+          if (initialData) {
+            await axios.patch(`/api/${params.storeId}/products/${params.productId}`, data);
+          } else {
+            await axios.post(`/api/${params.storeId}/products`, data);
+          }
+          router.refresh();
+          router.push(`/${params.storeId}/products`);
+          toast.success(toastMessage);
+        } catch (error) {
+          toast.error('Something went wrong.');
+        } finally {
+          setLoading(false);
         }
-        catch (error){
-            toast.error("An error occurred");
-        }finally{
-            setLoading(false);
-        }
-    };
+      };
 
     const onDelete = async () => {
         try{
