@@ -112,18 +112,18 @@ export async function PATCH (
         });
 
         const product = await primsadb.product.update({
-            where:{
+            where: {
                 id: params.productId,
             },
             data: {
                 images: {
                     createMany: {
                         data: [
-                            ...images.map((image: string) => ({ url: image })),
+                            ...images.map((image: {url: string }) => image),
                         ]
-                    },
-                },
-                },
+                    }
+                }
+            }
         })
 
         return NextResponse.json(product);

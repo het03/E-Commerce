@@ -110,7 +110,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             toast.success("Product deleted");
         }
         catch (error){
-            toast.error("Something went wrong");
+            toast.error("Something went wrong.");
         }finally{
             setLoading(false);
             setOpen(false);
@@ -189,7 +189,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                 Price
                             </FormLabel>
                             <FormControl>
-                                <Input type="number" disabled={loading} placeholder="9.99" {...field}/>
+                                <Input type="number" disabled={loading} placeholder="99" {...field}/>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
