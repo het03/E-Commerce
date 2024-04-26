@@ -16,7 +16,9 @@
 
 ![image](https://github.com/het03/E-Commerce-Admin/assets/103428174/43288891-204a-4080-ae92-fb0f6a8a64d2)
 
-![image](https://github.com/het03/E-Commerce-Admin/assets/103428174/b79262b1-1724-4faf-8015-c35cc876121c)
+![image](https://github.com/het03/E-Commerce-Admin/assets/103428174/3cd0a566-42e9-466e-bc46-cc4ac06b7fe0)
+
+![image](https://github.com/het03/E-Commerce-Admin/assets/103428174/26b50688-a8a2-4a8e-bf7f-dfb53d71f40a)
 
 ![image](https://github.com/het03/E-Commerce-Admin/assets/103428174/fff36f66-e1f1-436a-87f0-8792bfa7cacf)
 
